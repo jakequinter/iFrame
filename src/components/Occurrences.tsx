@@ -1,11 +1,10 @@
-import { connectStateResults } from 'react-instantsearch-dom';
-
+import { Hit } from '../../src/types/algolia/hits';
 import OccurrenceCard from './OccurrenceCard';
 
 import styles from '../../styles/Occurrences.module.scss';
 
 type Occurrences = {
-  hits: any;
+  hits: Array<Hit>;
 };
 
 export default function Occurrences({ hits }: Occurrences) {
