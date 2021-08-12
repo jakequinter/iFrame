@@ -1,8 +1,15 @@
-import algoliasearch from 'algoliasearch/lite';
+import { GetServerSideProps } from 'next';
+
+import { Hit } from '../../src/types/algolia/hits';
 import { initAlgolia } from '../../src/utils/initAlgolia';
 import Occurrences from '../../src/components/Occurrences';
 
-export default function IFrame({ hits }) {
+type IFrame = {
+  hits: Array<Hit>;
+};
+
+export default function IFrame({ hits }: IFrame) {
+  console.log(hits);
   return (
     <div>
       <Occurrences hits={hits} />
@@ -14,6 +21,7 @@ export async function getStaticPaths() {
   const hits = await initAlgolia();
 
   const paths = hits.map(hit => ({
+    // @ts-ignore
     params: { id: hit.instructor.userId.toString() },
   }));
 
@@ -23,11 +31,12 @@ export async function getStaticPaths() {
   };
 }
 
-export async function getStaticProps(context) {
+export const getServerSideProps: GetServerSideProps = async context => {
   const hits = await initAlgolia();
 
   const instructorHits = hits.filter(
-    h => h.instructor.userId === context.params.id
+    // @ts-ignore
+    h => h.instructor.userId === context.params?.id
   );
 
   return {
@@ -35,4 +44,4 @@ export async function getStaticProps(context) {
       hits: instructorHits,
     },
   };
-}
+};
