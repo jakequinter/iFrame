@@ -2,6 +2,8 @@ import { connectStateResults } from 'react-instantsearch-dom';
 
 import OccurrenceCard from '../OccurrenceCard';
 
+import styles from '../../../styles/CustomHits.module.scss';
+
 type CustomHits = {
   searchState: any;
   searchResults: any;
@@ -13,7 +15,7 @@ function CustomHits({ searchState, searchResults }: CustomHits) {
   console.log(searchResults?.hits);
 
   return (
-    <>
+    <div className={styles.container}>
       {searchResults?.hits.length === 0 && validQuery && (
         <p style={{ color: 'white' }}>Aw snap! No search results were found.</p>
       )}
@@ -29,7 +31,7 @@ function CustomHits({ searchState, searchResults }: CustomHits) {
           state={hit.course.location.state}
         />
       ))}
-    </>
+    </div>
   );
 }
 
