@@ -1,0 +1,82 @@
+// Style Guide: https://xd.adobe.com/view/22d9d2a6-e90a-4a22-ab80-3eab6e78e527-778a/screen/6eb5d1c9-2c39-4e6b-953c-194e14ba66bd/specs/
+
+// light to dark - please use these greys
+// if spec doesn't use this grey, round up or down to nearest color
+$snow: #fff; // rgb(255, 255, 255)
+$horizon: #f7f7f8; // rgb(247, 247, 248)
+$frost: #ebeced; // rgb(235, 236, 237)
+$wisp: #cbced1; // rgb(203, 206, 209)
+$altote: #9ea1a3; // rgb(158, 161, 183)
+$totoro: #747678; // rgb(116, 118, 120)
+$chapo: #444546; // rgb(68, 69, 70)
+$malverde: #232324; // rgb(35, 35, 36)
+$blackhole: #000; // rgb(0, 0, 0)
+
+// defunct
+$hoth: $horizon;
+$lightStone: $frost;
+$mist: $frost;
+$stone: $wisp;
+$millenium: $wisp;
+$ghost: $wisp;
+$alto: $altote;
+$altote: $altote;
+$tyrant: $altote;
+$downcast: $totoro;
+$ray: $totoro;
+$billow: $totoro;
+$shadow: $totoro;
+$slate: $chapo;
+$asphalt3: $chapo;
+$asphalt2: $chapo;
+$asphalt: $chapo;
+$darksaber: $chapo;
+$slab: $malverde;
+$abyss: $malverde;
+$soot: $malverde;
+
+// current
+$pluto: #3c4e6d;
+$moon: #386cc6;
+$jupiter: #46483e;
+$earth: #9fb543;
+$sun: #b88e33;
+$mercury: #cdb88a;
+$venus: #60314e;
+$saturn: #964d7c;
+$mars: #9c231f;
+
+// v4
+$sanka: $mars;
+$sanka-shaded: #721a17;
+$adobada: #95291c;
+$huerito: #e2caab;
+$sand: $mercury;
+$lima: #80981f;
+$ashitaka: $pluto;
+$yupa: $sun;
+$nausicaa: $moon;
+$yuzu: #e2b500;
+$sorui: $earth;
+$hai: $jupiter; // rgb(70, 72, 62)
+$hai-shaded: #383a32;
+$atlantic: $moon;
+$pacific: #2f5ca8;
+$kuratowa: #3b4d6e;
+$kuratowa-shaded: #032c53;
+
+// v3
+$amulet: #007cb7;
+$yuzu: #ffe67f;
+$teto: $sun;
+
+// roster
+$nobueno: #b00020;
+$bueno: #3c9f84;
+
+// antd
+$aoitori: #40a9ff;
+
+// gradients
+$ashitaka-to-soot-gradient: transparent
+  linear-gradient(156deg, $pluto 0%, #121212 21%) 0% 0% no-repeat padding-box;

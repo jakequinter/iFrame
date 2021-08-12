@@ -1,0 +1,35 @@
+// typography
+$main-font: 'Open Sans', sans-serif;
+$main-font-normal-weight: normal;
+$main-font-bold-weight: 600;
+$impact-font: 'Stratum', sans-serif;
+$impact-font-bold-weight: 600;
+
+// line height
+$lineheight: 1.2;
+$lineheight-spacy: 1.4;
+$lineheight-spacier: 1.6;
+$lineheight-spaciest: 1.8;
+$lineheight-spaciest-est: 2;
+
+// layout
+$max-width: 1400px;
+$authed-header-height: 64px;
+$un-authed-header-height: 56px;
+$header-breakpoint-xs-sm: 576px;
+$globalheader-height: 32px;
+$globalheader-height-md: 35px;
+$subnav-height: 56px;
+
+// ui
+$border-radius: 5px;
+
+// Gradients
+$right-slanted-grey: transparent
+  linear-gradient(132deg, #444546 0%, #969696 100%) 0% 0% no-repeat padding-box;
+
+// Box shadows
+$box-shadow: 0px 11px 37px #00000029;
+
+// CDN
+$cdn: 'https://cdn.usconcealedcarry.com/academy';

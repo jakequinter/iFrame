@@ -1,0 +1,186 @@
+@import '../styles/colors.scss';
+@import '../styles/variables.scss';
+
+.card {
+  background-color: $snow;
+  border-radius: $border-radius;
+  color: $soot;
+  min-width: 0;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+
+  // &.fixedwidth {
+  min-width: 278px;
+  width: 278px;
+  // }
+
+  &:hover {
+    color: $soot;
+  }
+
+  a {
+    font-weight: 600;
+  }
+}
+
+.masthead {
+  background-color: $blackhole;
+
+  div {
+    background-size: cover;
+    background-position: center center;
+    border-radius: $border-radius $border-radius 0 0;
+    filter: opacity(0.7);
+    height: 140px;
+    overflow: hidden;
+    width: 100%;
+  }
+}
+
+.description {
+  padding: 27px 20px 0;
+}
+
+.date {
+  align-items: center;
+  color: inherit;
+  display: flex;
+  font-size: 0.875rem;
+  font-weight: normal;
+  justify-content: space-between;
+  margin: 0;
+
+  a {
+    color: $moon;
+  }
+}
+
+.business {
+  color: inherit;
+  font-size: 0.875rem;
+  font-weight: $main-font-bold-weight;
+  margin: 6px 0 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  a {
+    color: $moon;
+  }
+}
+
+.name {
+  color: inherit;
+  font-size: 1.125rem;
+  margin: 20px 0 0;
+
+  a {
+    color: $moon;
+
+    &:hover {
+      color: inherit;
+      text-decoration: underline;
+    }
+  }
+}
+
+.rating {
+  display: inline-block;
+
+  svg {
+    fill: $yuzu;
+    margin: 0 6px;
+    position: relative;
+    top: 1px;
+  }
+}
+
+.address {
+  font-size: 0.875rem;
+  font-style: normal;
+  line-height: 1.6;
+  margin-top: 6px;
+  color: $totoro;
+
+  svg {
+    margin-right: 8px;
+    opacity: 0.5;
+    position: relative;
+    top: 2px;
+  }
+}
+
+.button {
+  background-color: $soot;
+  border: 0;
+  border-radius: $border-radius;
+  color: $snow;
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: bold;
+  margin-top: 18px;
+  padding: 8px 24px;
+  text-align: center;
+
+  &:hover {
+    background-color: $asphalt3;
+    color: $snow;
+  }
+}
+
+.distanceTag {
+  align-items: center;
+  background-color: #7c8d35;
+  border-radius: 5px;
+  color: $snow;
+  display: flex;
+  font-size: 0.875rem;
+  font-weight: 700;
+  height: 27px;
+  justify-content: center;
+  margin: 13px;
+  padding: 0 10px;
+  position: absolute;
+  z-index: 1;
+}
+
+.bottomContent {
+  border-top: 1px solid $wisp;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 60px;
+  padding: 0 20px;
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+
+    li {
+      margin-right: 16px;
+      height: 24px;
+
+      svg {
+        fill: $altote;
+      }
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}
+
+.price {
+  color: $sorui;
+  font-size: 1.125rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin: 0;
+  line-height: 24px;
+}

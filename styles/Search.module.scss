@@ -1,0 +1,72 @@
+@import '../styles/colors.scss';
+@import '../styles/variables.scss';
+
+$fade: rgba($snow, 0.2);
+
+.wrap {
+  margin-bottom: 60px;
+}
+
+.title {
+  font-size: 1.375rem;
+  font-weight: normal;
+  margin: 0 0 24px;
+  color: white;
+}
+
+.inputwrap {
+  max-width: 100%;
+  position: relative;
+  width: 420px;
+
+  :global {
+    .ap-dataset-places {
+      // sass-lint:disable-next-line nesting-depth
+      .ap-footer {
+        display: none;
+      }
+
+      // sass-lint:disable-next-line nesting-depth
+      .ap-suggestion-icon {
+        display: none;
+      }
+    }
+
+    .ap-input-icon {
+      color: $horizon;
+    }
+
+    .ap-dropdown-menu {
+      background-color: red;
+    }
+
+    .ap-suggestion {
+      &.ap-cursor {
+        background-color: $fade;
+      }
+    }
+
+    .ap-name {
+      color: inherit;
+    }
+
+    .ap-address {
+      color: inherit;
+    }
+  }
+}
+
+.input {
+  background-color: $chapo;
+  border: none;
+  border-radius: $border-radius;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 46px;
+  padding: 0 40px 0 16px;
+  width: 100%;
+
+  &::placeholder {
+    color: $tyrant;
+  }
+}
