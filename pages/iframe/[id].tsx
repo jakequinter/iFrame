@@ -1,4 +1,4 @@
-import { GetServerSideProps } from 'next';
+import { GetStaticPaths, GetStaticProps } from 'next';
 
 import { Hit } from '../../src/types/algolia/hits';
 import { initAlgolia } from '../../src/utils/initAlgolia';
@@ -17,7 +17,7 @@ export default function IFrame({ hits }: IFrame) {
   );
 }
 
-export async function getStaticPaths() {
+export const getStaticPaths: GetStaticPaths = async () => {
   const hits = await initAlgolia();
 
   const paths = hits.map(hit => ({
@@ -29,9 +29,9 @@ export async function getStaticPaths() {
     paths,
     fallback: false,
   };
-}
+};
 
-export const getServerSideProps: GetServerSideProps = async context => {
+export const getStaticProps: GetStaticProps = async context => {
   const hits = await initAlgolia();
 
   const instructorHits = hits.filter(
