@@ -2,6 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import { format } from 'date-fns';
 
+import { getDistanceFromLatLng } from '../utils/getLatLngDistance';
 import styles from '../../styles/Occurrence.module.scss';
 
 type Occurrence = {
@@ -12,6 +13,10 @@ type Occurrence = {
   venue: string;
   city: string;
   state: string;
+  lat: number;
+  lng: number;
+  latitude: number;
+  longitude: number;
 };
 
 export default function Occurrence({
@@ -22,13 +27,18 @@ export default function Occurrence({
   venue,
   city,
   state,
+  lat,
+  lng,
+  latitude,
+  longitude,
 }: Occurrence) {
   return (
     <a className={styles.card}>
       <div className={styles.topContent}>
         <div className={styles.distanceTag}>
-          12.8
-          {/* {convertMetersToMiles(metersAwayFromTarget).toFixed(1)} mi. */}
+          {latitude === 0
+            ? 'Calculating...'
+            : getDistanceFromLatLng(lat, lng, latitude, longitude)}
         </div>
         <div className={styles.masthead}>
           <Image

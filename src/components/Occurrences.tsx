@@ -5,9 +5,15 @@ import styles from '../../styles/Occurrences.module.scss';
 
 type Occurrences = {
   hits: Array<Hit>;
+  latitude: number;
+  longitude: number;
 };
 
-export default function Occurrences({ hits }: Occurrences) {
+export default function Occurrences({
+  hits,
+  latitude,
+  longitude,
+}: Occurrences) {
   return (
     <div className={styles.container}>
       {hits &&
@@ -21,6 +27,10 @@ export default function Occurrences({ hits }: Occurrences) {
             venue={hit.course.location.name}
             city={hit.course.location.city}
             state={hit.course.location.state}
+            lat={hit._geoloc.lat}
+            lng={hit._geoloc.lng}
+            latitude={latitude}
+            longitude={longitude}
           />
         ))}
     </div>

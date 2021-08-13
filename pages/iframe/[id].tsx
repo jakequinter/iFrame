@@ -21,6 +21,18 @@ const apiKey = process.env.NEXT_PUBLIC_ALGOLIA_PLACES_PUBLIC_KEY;
 
 export default function IFrame({ type, id, initialHits }: IFrame) {
   const [hits, setHits] = useState(initialHits);
+  const [latitude, setLatitude] = useState(0);
+  const [longitude, setLongitude] = useState(0);
+
+  if (
+    typeof window !== 'undefined' &&
+    typeof window.navigator !== 'undefined'
+  ) {
+    navigator.geolocation.getCurrentPosition(position => {
+      setLatitude(position.coords.latitude);
+      setLongitude(position.coords.longitude);
+    });
+  }
 
   const handleChange = async ({ suggestion }: Suggestion) => {
     const {
@@ -45,7 +57,7 @@ export default function IFrame({ type, id, initialHits }: IFrame) {
         }}
         onChange={handleChange}
       />
-      <Occurrences hits={hits} />
+      <Occurrences hits={hits} latitude={latitude} longitude={longitude} />
     </div>
   );
 }
