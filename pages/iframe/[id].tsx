@@ -1,29 +1,69 @@
+import React, { useEffect, useState } from 'react';
 import { GetStaticPaths, GetStaticProps } from 'next';
+import AlgoliaPlaces from 'algolia-places-react';
 
 import { Hit } from '../../src/types/algolia/hits';
-import { initAlgolia } from '../../src/utils/initAlgolia';
+import { getAlgoliaParameters, initAlgolia } from '../../src/utils/initAlgolia';
 import Occurrences from '../../src/components/Occurrences';
 
 type IFrame = {
-  hits: Array<Hit>;
+  type: 'instructor' | 'curriculum';
+  id: string;
+  initialHits: Array<Hit>;
 };
 
-export default function IFrame({ hits }: IFrame) {
-  console.log(hits);
+type Suggestion = {
+  suggestion: { latlng: { lat: string; lng: string } };
+};
+
+const appId = process.env.NEXT_PUBLIC_ALGOLIA_PLACES_APP_ID;
+const apiKey = process.env.NEXT_PUBLIC_ALGOLIA_PLACES_PUBLIC_KEY;
+
+export default function IFrame({ type, id, initialHits }: IFrame) {
+  const [hits, setHits] = useState(initialHits);
+
+  const handleChange = async ({ suggestion }: Suggestion) => {
+    const {
+      latlng: { lat, lng },
+    } = suggestion;
+
+    const searchHits = await initAlgolia(type, id, lat, lng);
+
+    // @ts-ignore
+    setHits(searchHits);
+  };
+
   return (
     <div>
+      <AlgoliaPlaces
+        placeholder="Search by address, city, or zip"
+        options={{
+          appId,
+          apiKey,
+          language: 'en',
+          countries: ['US', 'GU', 'PR'],
+        }}
+        onChange={handleChange}
+      />
       <Occurrences hits={hits} />
     </div>
   );
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const hits = await initAlgolia();
+  const hits = await getAlgoliaParameters();
 
-  const paths = hits.map(hit => ({
+  const curriculumAbbreviations = hits.map(hit => ({
     // @ts-ignore
-    params: { id: hit.instructor.userId.toString() },
+    params: { id: hit.curriculum.abbreviation },
   }));
+
+  const instructorUserIds = hits.map(hit => ({
+    // @ts-ignore
+    params: { id: hit.instructor.userId },
+  }));
+
+  const paths = instructorUserIds.concat(curriculumAbbreviations);
 
   return {
     paths,
@@ -32,16 +72,19 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async context => {
-  const hits = await initAlgolia();
+  const id = context.params?.id as string;
+  let type: 'instructor' | 'curriculum';
 
-  const instructorHits = hits.filter(
-    // @ts-ignore
-    h => h.instructor.userId === context.params?.id
-  );
+  if (id.includes('CCHDF') || id.includes('DSF1-CI')) type = 'curriculum';
+  else type = 'instructor';
+
+  const initialHits = await initAlgolia(type, id);
 
   return {
     props: {
-      hits: instructorHits,
+      type,
+      id,
+      initialHits,
     },
   };
 };
