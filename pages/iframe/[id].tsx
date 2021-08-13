@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import AlgoliaPlaces from 'algolia-places-react';
 
-import { Hit } from '../../src/types/algolia/hits';
-import { getAlgoliaParameters, initAlgolia } from '../../src/utils/initAlgolia';
-import Occurrences from '../../src/components/Occurrences';
+import { Hit } from 'src/types/algolia/hits';
+import { getAlgoliaParameters, initAlgolia } from 'src/utils/initAlgolia';
+import Occurrences from 'src/components/Occurrences';
 
 type IFrame = {
   type: 'instructor' | 'curriculum';

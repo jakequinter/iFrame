@@ -1,9 +1,12 @@
 import React from 'react';
+import Link from 'next/link';
 import Image from 'next/image';
 import { format } from 'date-fns';
 
-import { getDistanceFromLatLng } from '../utils/getLatLngDistance';
-import styles from '../../styles/Occurrence.module.scss';
+import { DEFAULT_COURSE_IMAGE } from 'src/images/images';
+import { getDistanceFromLatLng } from 'src/utils/getLatLngDistance';
+import { liveFire, wheelchair, shield, permit } from './icons/icons';
+import styles from 'src/styles/Occurrence.module.scss';
 
 type Occurrence = {
   courseName: string;
@@ -17,6 +20,11 @@ type Occurrence = {
   lng: number;
   latitude: number;
   longitude: number;
+  instructorGuid: string;
+  grantsCCW: boolean;
+  hasLiveFire: boolean;
+  isWheelchairAccessible: boolean;
+  isInstructorCertifying: boolean;
 };
 
 export default function Occurrence({
@@ -31,6 +39,11 @@ export default function Occurrence({
   lng,
   latitude,
   longitude,
+  instructorGuid,
+  grantsCCW,
+  hasLiveFire,
+  isWheelchairAccessible,
+  isInstructorCertifying,
 }: Occurrence) {
   return (
     <a className={styles.card}>
@@ -41,25 +54,21 @@ export default function Occurrence({
             : getDistanceFromLatLng(lat, lng, latitude, longitude)}
         </div>
         <div className={styles.masthead}>
-          <Image
-            src="https://images.unsplash.com/photo-1592698426264-d5a81aaa4ec8?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjB8fGd1bnxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60"
-            height="200"
-            width="288"
-            alt=""
-          />
+          <Image src={DEFAULT_COURSE_IMAGE} height="200" width="288" alt="" />
         </div>
         <div className={styles.description}>
           <h4 className={styles.date}>{format(new Date(startTime), 'PPP')}</h4>
           <h5 className={styles.name}>{courseName}</h5>
           <h6 className={styles.business}>
             with{' '}
-            {/* <a
-            href={`${
-              process.env.NEXT_PUBLIC_TRAINING_URL || ""
-            }/instructor/${instructorGuid}`}
-          > */}
-            {instructorName}
-            {/* </a> */}
+            <Link
+              href={`${
+                process.env.NEXT_PUBLIC_TRAINING_URL || ''
+              }/instructor/${instructorGuid}`}
+              passHref
+            >
+              <a>{instructorName}</a>
+            </Link>
             {/* {!!averageReviewRating && (
             <span className={styles.rating}>
               <FaStar />
@@ -75,16 +84,16 @@ export default function Occurrence({
 
       <div className={styles.bottomContent}>
         <div className={styles.classAttributes}>
-          {/* <ul>
-          {grantsCCW && <li title="Carry Permit">{permit}</li>}
-          {hasLiveFire && <li title="Live Fire">{liveFire}</li>}
-          {isWheelchairAccessible && (
-            <li title="Wheelchair Accessible">{wheelchair}</li>
-          )}
-          {isInstructorCertifying && (
-            <li title="Instructor Certification Course">{shield}</li>
-          )}
-        </ul> */}
+          <ul>
+            {grantsCCW && <li title="Carry Permit">{permit}</li>}
+            {hasLiveFire && <li title="Live Fire">{liveFire}</li>}
+            {isWheelchairAccessible && (
+              <li title="Wheelchair Accessible">{wheelchair}</li>
+            )}
+            {isInstructorCertifying && (
+              <li title="Instructor Certification Course">{shield}</li>
+            )}
+          </ul>
         </div>
 
         <p className={styles.price}>{price ? `$${price}` : 'Free'}</p>

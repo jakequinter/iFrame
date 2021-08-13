@@ -1,7 +1,7 @@
-import { Hit } from '../../src/types/algolia/hits';
+import { Hit } from 'src/types/algolia/hits';
 import OccurrenceCard from './OccurrenceCard';
 
-import styles from '../../styles/Occurrences.module.scss';
+import styles from 'src/styles/Occurrences.module.scss';
 
 type Occurrences = {
   hits: Array<Hit>;
@@ -31,6 +31,11 @@ export default function Occurrences({
             lng={hit._geoloc.lng}
             latitude={latitude}
             longitude={longitude}
+            instructorGuid={hit.instructor.guid}
+            grantsCCW={hit.course.grantsCCW}
+            hasLiveFire={hit.course.hasLiveFire}
+            isWheelchairAccessible={hit.course.isWheelchairAccessible}
+            isInstructorCertifying={hit.curriculum.isInstructorCertifying}
           />
         ))}
     </div>
