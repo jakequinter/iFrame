@@ -55,12 +55,12 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   const curriculumAbbreviations = hits.map(hit => ({
     // @ts-ignore
-    params: { id: hit.curriculum.abbreviation },
+    params: { id: hit.curriculum.abbreviation || '404' },
   }));
 
   const instructorUserIds = hits.map(hit => ({
     // @ts-ignore
-    params: { id: hit.instructor.userId },
+    params: { id: hit.instructor.userId || '404' },
   }));
 
   const paths = instructorUserIds.concat(curriculumAbbreviations);
