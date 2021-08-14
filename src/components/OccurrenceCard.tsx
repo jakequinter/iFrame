@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { FaStar } from 'react-icons/fa';
 import { format } from 'date-fns';
 
 import { DEFAULT_COURSE_IMAGE } from 'src/images/images';
@@ -9,50 +10,52 @@ import { liveFire, wheelchair, shield, permit } from './icons/icons';
 import styles from 'src/styles/Occurrence.module.scss';
 
 type Occurrence = {
-  courseName: string;
-  instructorName: string;
-  startTime: string;
-  price: number;
-  venue: string;
+  averageReviewRating: number;
   city: string;
-  state: string;
-  lat: number;
-  lng: number;
-  latitude: number;
-  longitude: number;
-  instructorGuid: string;
+  courseName: string;
   grantsCCW: boolean;
   hasLiveFire: boolean;
-  isWheelchairAccessible: boolean;
+  instructorGuid: string;
+  instructorName: string;
   isInstructorCertifying: boolean;
+  isWheelchairAccessible: boolean;
+  lat: number;
+  latitude: number;
+  lng: number;
+  longitude: number;
+  price: number;
+  startTime: string;
+  state: string;
+  venue: string;
 };
 
 export default function Occurrence({
-  startTime,
-  price,
-  courseName,
-  instructorName,
-  venue,
+  averageReviewRating,
   city,
-  state,
-  lat,
-  lng,
-  latitude,
-  longitude,
-  instructorGuid,
+  courseName,
   grantsCCW,
   hasLiveFire,
-  isWheelchairAccessible,
+  instructorGuid,
+  instructorName,
   isInstructorCertifying,
+  isWheelchairAccessible,
+  lat,
+  latitude,
+  lng,
+  longitude,
+  price,
+  startTime,
+  state,
+  venue
 }: Occurrence) {
   return (
     <a className={styles.card}>
       <div className={styles.topContent}>
-        <div className={styles.distanceTag}>
-          {latitude === 0
-            ? 'Calculating...'
-            : getDistanceFromLatLng(lat, lng, latitude, longitude)}
-        </div>
+        {latitude !== 0 && (
+          <div className={styles.distanceTag}>
+            {getDistanceFromLatLng(lat, lng, latitude, longitude)}
+          </div>
+        )}
         <div className={styles.masthead}>
           <Image src={DEFAULT_COURSE_IMAGE} height="200" width="288" alt="" />
         </div>
@@ -69,12 +72,12 @@ export default function Occurrence({
             >
               <a>{instructorName}</a>
             </Link>
-            {/* {!!averageReviewRating && (
-            <span className={styles.rating}>
-              <FaStar />
-              {averageReviewRating}
-            </span>
-          )} */}
+            {!!averageReviewRating && (
+              <span className={styles.rating}>
+                <FaStar />
+                {averageReviewRating}
+              </span>
+            )}
           </h6>
           <address className={styles.address}>
             {venue}, {city}, {state}

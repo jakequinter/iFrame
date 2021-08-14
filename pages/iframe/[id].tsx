@@ -24,19 +24,25 @@ export default function IFrame({ type, id, initialHits }: IFrame) {
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
 
-  if (
-    typeof window !== 'undefined' &&
-    typeof window.navigator !== 'undefined'
-  ) {
-    navigator.geolocation.getCurrentPosition(position => {
-      setLatitude(position.coords.latitude);
-      setLongitude(position.coords.longitude);
-    });
-  }
+  useEffect(() => {
+    if (sessionStorage.getItem('lat') && sessionStorage.getItem('lng')) {
+      setLatitude(Number(sessionStorage.getItem('lat')));
+      setLongitude(Number(sessionStorage.getItem('lng')));
+    } else {
+      if ('geolocation' in navigator) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+          setLatitude(position.coords.latitude);
+          setLongitude(position.coords.longitude);
+          sessionStorage.setItem('lat', position.coords.latitude.toString());
+          sessionStorage.setItem('lng', position.coords.longitude.toString());
+        });
+      }
+    }
+  }, []);
 
   const handleChange = async ({ suggestion }: Suggestion) => {
     const {
-      latlng: { lat, lng },
+      latlng: { lat, lng }
     } = suggestion;
 
     const searchHits = await initAlgolia(type, id, lat, lng);
@@ -53,7 +59,7 @@ export default function IFrame({ type, id, initialHits }: IFrame) {
           appId,
           apiKey,
           language: 'en',
-          countries: ['US', 'GU', 'PR'],
+          countries: ['US', 'GU', 'PR']
         }}
         onChange={handleChange}
       />
@@ -67,19 +73,19 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   const curriculumAbbreviations = hits.map(hit => ({
     // @ts-ignore
-    params: { id: hit.curriculum.abbreviation || '404' },
+    params: { id: hit.curriculum.abbreviation || '404' }
   }));
 
   const instructorUserIds = hits.map(hit => ({
     // @ts-ignore
-    params: { id: hit.instructor.userId || '404' },
+    params: { id: hit.instructor.userId || '404' }
   }));
 
   const paths = instructorUserIds.concat(curriculumAbbreviations);
 
   return {
     paths,
-    fallback: false,
+    fallback: false
   };
 };
 
@@ -96,7 +102,7 @@ export const getStaticProps: GetStaticProps = async context => {
     props: {
       type,
       id,
-      initialHits,
-    },
+      initialHits
+    }
   };
 };

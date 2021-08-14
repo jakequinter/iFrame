@@ -12,7 +12,7 @@ type Occurrences = {
 export default function Occurrences({
   hits,
   latitude,
-  longitude,
+  longitude
 }: Occurrences) {
   return (
     <div className={styles.container}>
@@ -20,22 +20,23 @@ export default function Occurrences({
         hits.map(hit => (
           <OccurrenceCard
             key={hit.objectID}
-            courseName={hit.course.name}
-            instructorName={hit.instructor.name}
-            startTime={hit.dates.Day1_StartTime}
-            price={hit.course.price}
-            venue={hit.course.location.name}
+            averageReviewRating={hit.instructor.averageReviewRating}
             city={hit.course.location.city}
-            state={hit.course.location.state}
-            lat={hit._geoloc.lat}
-            lng={hit._geoloc.lng}
-            latitude={latitude}
-            longitude={longitude}
-            instructorGuid={hit.instructor.guid}
+            courseName={hit.course.name}
             grantsCCW={hit.course.grantsCCW}
             hasLiveFire={hit.course.hasLiveFire}
-            isWheelchairAccessible={hit.course.isWheelchairAccessible}
+            instructorGuid={hit.instructor.guid}
+            instructorName={hit.instructor.name}
             isInstructorCertifying={hit.curriculum.isInstructorCertifying}
+            isWheelchairAccessible={hit.course.isWheelchairAccessible}
+            lat={hit._geoloc.lat}
+            latitude={latitude}
+            lng={hit._geoloc.lng}
+            longitude={longitude}
+            price={hit.course.price}
+            startTime={hit.dates.Day1_StartTime}
+            state={hit.course.location.state}
+            venue={hit.course.location.name}
           />
         ))}
     </div>
