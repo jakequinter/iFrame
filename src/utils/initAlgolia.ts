@@ -8,7 +8,6 @@ export async function initAlgolia(type: 'instructor' | 'curriculum', id: string,
 
   const index = searchClient.initIndex(process.env.NEXT_PUBLIC_ALGOLIA_OCCURRENCES_INDEX as string);
 
-// @TODO: filter by curriculum abbreviation
   const res = await index.search('', {
     filters: type === 'curriculum' ? `curriculum.abbreviation:${id}` : `instructor.userId:${id}`,
     aroundLatLng: lat && lng ? `${lat}, ${lng}` : '',

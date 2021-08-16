@@ -1,23 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { GetStaticPaths, GetStaticProps } from 'next';
-import AlgoliaPlaces from 'algolia-places-react';
 
 import { Hit } from 'src/types/algolia/hits';
 import { getAlgoliaParameters, initAlgolia } from 'src/utils/initAlgolia';
 import Occurrences from 'src/components/Occurrences';
+import Search from 'src/components/Search';
+
+import styles from 'src/styles/iFrame.module.scss';
 
 type IFrame = {
   type: 'instructor' | 'curriculum';
   id: string;
   initialHits: Array<Hit>;
 };
-
-type Suggestion = {
-  suggestion: { latlng: { lat: string; lng: string } };
-};
-
-const appId = process.env.NEXT_PUBLIC_ALGOLIA_PLACES_APP_ID;
-const apiKey = process.env.NEXT_PUBLIC_ALGOLIA_PLACES_PUBLIC_KEY;
 
 export default function IFrame({ type, id, initialHits }: IFrame) {
   const [hits, setHits] = useState(initialHits);
@@ -40,30 +35,15 @@ export default function IFrame({ type, id, initialHits }: IFrame) {
     }
   }, []);
 
-  const handleChange = async ({ suggestion }: Suggestion) => {
-    const {
-      latlng: { lat, lng }
-    } = suggestion;
-
-    const searchHits = await initAlgolia(type, id, lat, lng);
-
-    // @ts-ignore
-    setHits(searchHits);
-  };
-
   return (
-    <div>
-      <AlgoliaPlaces
-        placeholder="Search by address, city, or zip"
-        options={{
-          appId,
-          apiKey,
-          language: 'en',
-          countries: ['US', 'GU', 'PR']
-        }}
-        onChange={handleChange}
+    <div className={styles.container}>
+      <Search type={type} id={id} setHits={setHits} />
+      <Occurrences
+        hits={hits}
+        latitude={latitude}
+        longitude={longitude}
+        totalHits={initialHits.length}
       />
-      <Occurrences hits={hits} latitude={latitude} longitude={longitude} />
     </div>
   );
 }
@@ -73,19 +53,19 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   const curriculumAbbreviations = hits.map(hit => ({
     // @ts-ignore
-    params: { id: hit.curriculum.abbreviation || '404' }
+    params: { id: hit.curriculum.abbreviation || '404' },
   }));
 
   const instructorUserIds = hits.map(hit => ({
     // @ts-ignore
-    params: { id: hit.instructor.userId || '404' }
+    params: { id: hit.instructor.userId || '404' },
   }));
 
   const paths = instructorUserIds.concat(curriculumAbbreviations);
 
   return {
     paths,
-    fallback: false
+    fallback: false,
   };
 };
 
@@ -102,7 +82,7 @@ export const getStaticProps: GetStaticProps = async context => {
     props: {
       type,
       id,
-      initialHits
-    }
+      initialHits,
+    },
   };
 };

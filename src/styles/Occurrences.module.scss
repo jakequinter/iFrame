@@ -1,4 +1,20 @@
+@import 'src/styles/colors.scss';
+@import 'src/styles/variables.scss';
+
 .container {
   display: flex;
+  margin-bottom: 1.5rem;
   overflow-x: auto;
+}
+
+.link {
+  color: $snow;
+  display: flex;
+  align-items: center;
+  font-weight: $main-font-bold-weight;
+}
+
+.icon {
+  color: $mercury;
+  margin-left: 0.75rem;
 }

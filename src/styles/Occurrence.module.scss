@@ -5,12 +5,12 @@
   background-color: $snow;
   border-radius: $border-radius;
   color: $soot;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-right: 0.5rem;
   min-width: 0;
   position: relative;
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
-  margin-right: 0.5rem;
 
   // &.fixedwidth {
   min-width: 278px;
@@ -99,11 +99,12 @@
 }
 
 .address {
+  color: $totoro;
   font-size: 0.875rem;
   font-style: normal;
   line-height: 1.6;
   margin-top: 6px;
-  color: $totoro;
+  margin-bottom: 20px;
 
   svg {
     margin-right: 8px;
@@ -148,11 +149,11 @@
 }
 
 .bottomContent {
+  align-items: center;
   border-top: 1px solid $wisp;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
   height: 60px;
+  justify-content: space-between;
   padding: 0 20px;
 
   ul {
@@ -181,7 +182,7 @@
   color: $sorui;
   font-size: 1.125rem;
   font-weight: bold;
-  text-transform: uppercase;
-  margin: 0;
   line-height: 24px;
+  margin: 0;
+  text-transform: uppercase;
 }
