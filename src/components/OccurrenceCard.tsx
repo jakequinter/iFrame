@@ -15,6 +15,7 @@ type Occurrence = {
   courseName: string;
   grantsCCW: boolean;
   hasLiveFire: boolean;
+  imageUrl: string;
   instructorGuid: string;
   instructorName: string;
   isInstructorCertifying: boolean;
@@ -35,6 +36,7 @@ export default function Occurrence({
   courseName,
   grantsCCW,
   hasLiveFire,
+  imageUrl,
   instructorGuid,
   instructorName,
   isInstructorCertifying,
@@ -46,7 +48,7 @@ export default function Occurrence({
   price,
   startTime,
   state,
-  venue
+  venue,
 }: Occurrence) {
   return (
     <a className={styles.card}>
@@ -57,7 +59,12 @@ export default function Occurrence({
           </div>
         )}
         <div className={styles.masthead}>
-          <Image src={DEFAULT_COURSE_IMAGE} height="200" width="288" alt="" />
+          <Image
+            src={imageUrl ? imageUrl : DEFAULT_COURSE_IMAGE}
+            height="200"
+            width="288"
+            alt=""
+          />
         </div>
         <div className={styles.description}>
           <h4 className={styles.date}>{format(new Date(startTime), 'PPP')}</h4>

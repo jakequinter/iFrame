@@ -31,6 +31,7 @@ export default function Occurrences({
               courseName={hit.course.name}
               grantsCCW={hit.course.grantsCCW}
               hasLiveFire={hit.course.hasLiveFire}
+              imageUrl={hit.course.imageUrl}
               instructorGuid={hit.instructor.guid}
               instructorName={hit.instructor.name}
               isInstructorCertifying={hit.curriculum.isInstructorCertifying}
