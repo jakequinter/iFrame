@@ -27,7 +27,6 @@ export default function Search({ type, id, setHits }: Search) {
 
     const searchHits = await initAlgolia(type, id, lat, lng);
 
-    // @ts-ignore
     setHits(searchHits);
   };
 

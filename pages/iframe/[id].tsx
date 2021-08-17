@@ -2,7 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { GetStaticPaths, GetStaticProps } from 'next';
 
 import { Hit } from 'src/types/algolia/hits';
-import { getAlgoliaParameters, initAlgolia } from 'src/utils/initAlgolia';
+import {
+  getAlgoliaParameters,
+  initAlgolia,
+  getTotalClasses,
+} from 'src/utils/initAlgolia';
 import Occurrences from 'src/components/Occurrences';
 import Search from 'src/components/Search';
 
@@ -12,12 +16,31 @@ type IFrame = {
   type: 'instructor' | 'curriculum';
   id: string;
   initialHits: Array<Hit>;
+  totalClasses: number;
 };
 
-export default function IFrame({ type, id, initialHits }: IFrame) {
+export default function IFrame({
+  type,
+  id,
+  initialHits,
+  totalClasses,
+}: IFrame) {
   const [hits, setHits] = useState(initialHits);
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
+
+  // const fetchCoursesByGeolocation = async () => {
+  //   const searchHits = await initAlgolia(
+  //     type,
+  //     id,
+  //     latitude.toString(),
+  //     longitude.toString()
+  //   );
+
+  //   console.log('hitssss', searchHits);
+  //   // @ts-ignore
+  //   setHits(searchHits);
+  // };
 
   useEffect(() => {
     if (sessionStorage.getItem('lat') && sessionStorage.getItem('lng')) {
@@ -33,6 +56,7 @@ export default function IFrame({ type, id, initialHits }: IFrame) {
         });
       }
     }
+    // fetchCoursesByGeolocation();
   }, []);
 
   return (
@@ -42,7 +66,7 @@ export default function IFrame({ type, id, initialHits }: IFrame) {
         hits={hits}
         latitude={latitude}
         longitude={longitude}
-        totalHits={initialHits.length}
+        totalHits={totalClasses}
       />
     </div>
   );
@@ -52,12 +76,10 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const hits = await getAlgoliaParameters();
 
   const curriculumAbbreviations = hits.map(hit => ({
-    // @ts-ignore
     params: { id: hit.curriculum.abbreviation || '404' },
   }));
 
   const instructorUserIds = hits.map(hit => ({
-    // @ts-ignore
     params: { id: hit.instructor.userId || '404' },
   }));
 
@@ -78,11 +100,14 @@ export const getStaticProps: GetStaticProps = async context => {
 
   const initialHits = await initAlgolia(type, id);
 
+  const totalClasses = await getTotalClasses(type, id);
+
   return {
     props: {
       type,
       id,
       initialHits,
+      totalClasses,
     },
   };
 };

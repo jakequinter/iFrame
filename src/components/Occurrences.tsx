@@ -22,7 +22,7 @@ export default function Occurrences({
   return (
     <>
       <div className={styles.container}>
-        {hits &&
+        {hits.length > 0 ? (
           hits.map(hit => (
             <OccurrenceCard
               key={hit.objectID}
@@ -44,7 +44,12 @@ export default function Occurrences({
               state={hit.course.location.state}
               venue={hit.course.location.name}
             />
-          ))}
+          ))
+        ) : (
+          <p className={styles.noResults}>
+            There are currently no classes being offered near this location.
+          </p>
+        )}
       </div>
       <Link href="#">
         <a className={styles.link}>
