@@ -6,6 +6,7 @@
       "dom.iterable",
       "esnext"
     ],
+    "types": ["cypress"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -23,8 +24,9 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-, "cypress/integration/sample_spec.js"  ],
+    ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "cypress"
   ]
 }
