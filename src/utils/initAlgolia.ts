@@ -29,9 +29,7 @@ export async function getAlgoliaParameters() {
 
   const index = searchClient.initIndex(process.env.NEXT_PUBLIC_ALGOLIA_OCCURRENCES_INDEX as string);
 
-  const res: AlgoliaResponse = await index.search('', {
-    hitsPerPage: 100,
-  });
+  const res: AlgoliaResponse = await index.search('');
 
   return await res.hits;
 }

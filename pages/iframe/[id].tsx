@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { GetStaticPaths, GetStaticProps } from 'next';
+import { GetStaticPaths, GetStaticProps, GetServerSideProps } from 'next';
 
 import { Hit } from 'src/types/algolia/hits';
 import {
@@ -72,26 +72,27 @@ export default function IFrame({
   );
 }
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  const hits = await getAlgoliaParameters();
+// export const getStaticPaths: GetStaticPaths = async () => {
+//   const hits = await getAlgoliaParameters();
 
-  const curriculumAbbreviations = hits.map(hit => ({
-    params: { id: hit.curriculum.abbreviation || '404' },
-  }));
+//   const curriculumAbbreviations = hits.map(hit => ({
+//     params: { id: hit.curriculum.abbreviation || '404' },
+//   }));
 
-  const instructorUserIds = hits.map(hit => ({
-    params: { id: hit.instructor.userId || '404' },
-  }));
+//   const instructorUserIds = hits.map(hit => ({
+//     params: { id: hit.instructor.userId || '404' },
+//   }));
 
-  const paths = instructorUserIds.concat(curriculumAbbreviations);
+//   const paths = instructorUserIds.concat(curriculumAbbreviations);
+//   console.log('path', paths);
 
-  return {
-    paths,
-    fallback: false,
-  };
-};
+//   return {
+//     paths,
+//     fallback: false,
+//   };
+// };
 
-export const getStaticProps: GetStaticProps = async context => {
+export const getServerSideProps: GetServerSideProps = async context => {
   const id = context.params?.id as string;
   let type: 'instructor' | 'curriculum';
 
