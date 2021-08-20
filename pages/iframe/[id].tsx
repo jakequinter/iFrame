@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { GetStaticPaths, GetStaticProps, GetServerSideProps } from 'next';
+import { useRouter } from 'next/router';
+import { GetServerSideProps } from 'next';
 
 import { Hit } from 'src/types/algolia/hits';
-import {
-  getAlgoliaParameters,
-  initAlgolia,
-  getTotalClasses,
-} from 'src/utils/initAlgolia';
+import { initAlgolia, getTotalClasses } from 'src/utils/initAlgolia';
 import Occurrences from 'src/components/Occurrences';
 import Search from 'src/components/Search';
 
@@ -23,11 +20,19 @@ export default function IFrame({
   type,
   id,
   initialHits,
-  totalClasses,
+  totalClasses
 }: IFrame) {
+  const router = useRouter();
   const [hits, setHits] = useState(initialHits);
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
+
+  const handleLocation = () => {
+    if (router.query.id === 'FL-CCHDF') {
+      setLatitude(28.5384);
+      setLongitude(-81.633);
+    }
+  };
 
   // const fetchCoursesByGeolocation = async () => {
   //   const searchHits = await initAlgolia(
@@ -43,21 +48,19 @@ export default function IFrame({
   // };
 
   useEffect(() => {
-    if (sessionStorage.getItem('lat') && sessionStorage.getItem('lng')) {
-      setLatitude(Number(sessionStorage.getItem('lat')));
-      setLongitude(Number(sessionStorage.getItem('lng')));
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition(function (position) {
+        setLatitude(position.coords.latitude);
+        setLongitude(position.coords.longitude);
+        sessionStorage.setItem('lat', position.coords.latitude.toString());
+        sessionStorage.setItem('lng', position.coords.longitude.toString());
+      });
     } else {
-      if ('geolocation' in navigator) {
-        navigator.geolocation.getCurrentPosition(function (position) {
-          setLatitude(position.coords.latitude);
-          setLongitude(position.coords.longitude);
-          sessionStorage.setItem('lat', position.coords.latitude.toString());
-          sessionStorage.setItem('lng', position.coords.longitude.toString());
-        });
-      }
+      handleLocation();
     }
+
     // fetchCoursesByGeolocation();
-  }, []);
+  }, [handleLocation]);
 
   return (
     <div className={styles.container}>
@@ -71,26 +74,6 @@ export default function IFrame({
     </div>
   );
 }
-
-// export const getStaticPaths: GetStaticPaths = async () => {
-//   const hits = await getAlgoliaParameters();
-
-//   const curriculumAbbreviations = hits.map(hit => ({
-//     params: { id: hit.curriculum.abbreviation || '404' },
-//   }));
-
-//   const instructorUserIds = hits.map(hit => ({
-//     params: { id: hit.instructor.userId || '404' },
-//   }));
-
-//   const paths = instructorUserIds.concat(curriculumAbbreviations);
-//   console.log('path', paths);
-
-//   return {
-//     paths,
-//     fallback: false,
-//   };
-// };
 
 export const getServerSideProps: GetServerSideProps = async context => {
   const id = context.params?.id as string;
@@ -108,7 +91,7 @@ export const getServerSideProps: GetServerSideProps = async context => {
       type,
       id,
       initialHits,
-      totalClasses,
-    },
+      totalClasses
+    }
   };
 };

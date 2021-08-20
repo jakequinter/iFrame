@@ -48,7 +48,7 @@ export default function Occurrence({
   price,
   startTime,
   state,
-  venue,
+  venue
 }: Occurrence) {
   return (
     <a className={styles.card}>
