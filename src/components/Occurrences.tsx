@@ -48,8 +48,6 @@ export default function Occurrences({
                 instructorName={hit.instructor.name}
                 isInstructorCertifying={hit.curriculum.isInstructorCertifying}
                 isWheelchairAccessible={hit.course.isWheelchairAccessible}
-                latitude={latitude ? latitude : 0}
-                longitude={longitude ? longitude : 0}
                 price={hit.course.price}
                 startTime={hit.dates.Day1_StartTime}
                 state={hit.course.location.state}

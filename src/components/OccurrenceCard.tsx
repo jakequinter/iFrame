@@ -20,8 +20,6 @@ type Occurrence = {
   instructorName: string;
   isInstructorCertifying: boolean;
   isWheelchairAccessible: boolean;
-  latitude: number;
-  longitude: number;
   price: number;
   startTime: string;
   state: string;
@@ -40,19 +38,16 @@ export default function Occurrence({
   instructorName,
   isInstructorCertifying,
   isWheelchairAccessible,
-  latitude,
-  longitude,
   price,
   startTime,
   state,
   venue,
 }: Occurrence) {
   return (
-    <a className={styles.card}>
+    <div className={styles.card}>
       <div className={styles.topContent}>
-        {latitude !== 0 && (
-          <div className={styles.distanceTag}>{distance} mi.</div>
-        )}
+        <div className={styles.distanceTag}>{distance} mi.</div>
+
         <div className={styles.masthead}>
           <Image
             src={imageUrl ? imageUrl : DEFAULT_COURSE_IMAGE}
@@ -62,7 +57,9 @@ export default function Occurrence({
           />
         </div>
         <div className={styles.description}>
-          <h4 className={styles.date}>{format(new Date(startTime), 'PPP')}</h4>
+          <h4 className={styles.date}>
+            {format(new Date(startTime.split(' ')[0]), 'PPP')}
+          </h4>
           <h5 className={styles.name}>{courseName}</h5>
           <h6 className={styles.business}>
             with{' '}
@@ -103,6 +100,6 @@ export default function Occurrence({
 
         <p className={styles.price}>{price ? `$${price}` : 'Free'}</p>
       </div>
-    </a>
+    </div>
   );
 }
