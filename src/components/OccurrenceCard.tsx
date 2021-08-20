@@ -46,8 +46,9 @@ export default function Occurrence({
   return (
     <div className={styles.card}>
       <div className={styles.topContent}>
-        <div className={styles.distanceTag}>{distance} mi.</div>
-
+        {typeof distance === 'number' && !Number.isNaN(distance) && (
+          <div className={styles.distanceTag}>{distance} mi.</div>
+        )}
         <div className={styles.masthead}>
           <Image
             src={imageUrl ? imageUrl : DEFAULT_COURSE_IMAGE}
