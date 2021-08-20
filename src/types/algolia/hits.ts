@@ -1,16 +1,17 @@
 export type Hit = {
-  objectID: string;
-  guid: string;
-  isMultiday: boolean;
-  startsAt: string;
-  startsAtTimestamp: number;
-  endsAt: string;
-  endsAtTimestamp: number;
+  _geoloc: GeoLoc;
   course: Course;
   curriculum: Curriculum;
   dates: Dates;
+  distance: number;
+  endsAt: string;
+  endsAtTimestamp: number;
+  guid: string;
   instructor: Instructor;
-  _geoloc: GeoLoc;
+  isMultiday: boolean;
+  objectID: string;
+  startsAt: string;
+  startsAtTimestamp: number;
 };
 
 type Location = {

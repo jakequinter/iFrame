@@ -14,6 +14,7 @@ export async function initAlgolia(type: 'instructor' | 'curriculum', id: string,
     filters: type === 'curriculum' ? `curriculum.abbreviation:${id}` : `instructor.userId:${id}`,
     aroundLatLng: lat && lng ? `${lat}, ${lng}` : '',
     aroundRadius: 160934, // 100 miles
+    hitsPerPage: 1000
   });
 
   return await res.hits;

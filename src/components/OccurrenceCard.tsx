@@ -5,7 +5,6 @@ import { FaStar } from 'react-icons/fa';
 import { format } from 'date-fns';
 
 import { DEFAULT_COURSE_IMAGE } from 'src/images/images';
-import { getDistanceFromLatLng } from 'src/utils/getLatLngDistance';
 import { liveFire, wheelchair, shield, permit } from './icons/icons';
 import styles from 'src/styles/Occurrence.module.scss';
 
@@ -13,6 +12,7 @@ type Occurrence = {
   averageReviewRating: number;
   city: string;
   courseName: string;
+  distance: number;
   grantsCCW: boolean;
   hasLiveFire: boolean;
   imageUrl: string;
@@ -20,9 +20,7 @@ type Occurrence = {
   instructorName: string;
   isInstructorCertifying: boolean;
   isWheelchairAccessible: boolean;
-  lat: number;
   latitude: number;
-  lng: number;
   longitude: number;
   price: number;
   startTime: string;
@@ -34,6 +32,7 @@ export default function Occurrence({
   averageReviewRating,
   city,
   courseName,
+  distance,
   grantsCCW,
   hasLiveFire,
   imageUrl,
@@ -41,22 +40,18 @@ export default function Occurrence({
   instructorName,
   isInstructorCertifying,
   isWheelchairAccessible,
-  lat,
   latitude,
-  lng,
   longitude,
   price,
   startTime,
   state,
-  venue
+  venue,
 }: Occurrence) {
   return (
     <a className={styles.card}>
       <div className={styles.topContent}>
         {latitude !== 0 && (
-          <div className={styles.distanceTag}>
-            {getDistanceFromLatLng(lat, lng, latitude, longitude)}
-          </div>
+          <div className={styles.distanceTag}>{distance} mi.</div>
         )}
         <div className={styles.masthead}>
           <Image

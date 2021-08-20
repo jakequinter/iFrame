@@ -24,5 +24,5 @@ export function getDistanceFromLatLng(
   const d = 2 * r * Math.asin(Math.sqrt(a));
 
   //return miles
-  return (d * 0.621371).toFixed(1) + " mi.";
+  return Number((d * 0.621371).toFixed(1));
 }
