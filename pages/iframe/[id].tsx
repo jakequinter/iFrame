@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
 import { GetServerSideProps } from 'next';
 
 import { Hit } from 'src/types/algolia/hits';
-import { initAlgolia, getTotalClasses } from 'src/utils/initAlgolia';
+import { initAlgolia } from 'src/utils/initAlgolia';
 import Occurrences from 'src/components/Occurrences';
 import Search from 'src/components/Search';
+import { useLocation } from 'src/hooks/useLocation';
+import { useWatchLocation } from 'src/hooks/useWatchLocation';
+import { geolocationOptions } from 'src/constants/geolocationOptions';
 
 import styles from 'src/styles/iFrame.module.scss';
 
@@ -16,60 +18,31 @@ type IFrame = {
   totalClasses: number;
 };
 
-export default function IFrame({
-  type,
-  id,
-  initialHits,
-  totalClasses
-}: IFrame) {
-  const router = useRouter();
+export default function IFrame({ type, id, initialHits }: IFrame) {
   const [hits, setHits] = useState(initialHits);
-  const [latitude, setLatitude] = useState(0);
-  const [longitude, setLongitude] = useState(0);
-
-  const handleLocation = () => {
-    if (router.query.id === 'FL-CCHDF') {
-      setLatitude(28.5384);
-      setLongitude(-81.633);
-    }
-  };
-
-  // const fetchCoursesByGeolocation = async () => {
-  //   const searchHits = await initAlgolia(
-  //     type,
-  //     id,
-  //     latitude.toString(),
-  //     longitude.toString()
-  //   );
-
-  //   console.log('hitssss', searchHits);
-  //   // @ts-ignore
-  //   setHits(searchHits);
-  // };
+  const { location: currentLocation, error: currentError } =
+    useLocation(geolocationOptions);
+  const { location, cancelLocationWatch, error } =
+    useWatchLocation(geolocationOptions);
+  const [isWatchinForLocation, setIsWatchForLocation] = useState(true);
 
   useEffect(() => {
-    if ('geolocation' in navigator) {
-      navigator.geolocation.getCurrentPosition(function (position) {
-        setLatitude(position.coords.latitude);
-        setLongitude(position.coords.longitude);
-        sessionStorage.setItem('lat', position.coords.latitude.toString());
-        sessionStorage.setItem('lng', position.coords.longitude.toString());
-      });
-    } else {
-      handleLocation();
-    }
+    if (!location) return;
 
-    // fetchCoursesByGeolocation();
-  }, [handleLocation]);
+    // Cancel location watch after 3sec
+    setTimeout(() => {
+      cancelLocationWatch();
+      setIsWatchForLocation(false);
+    }, 3000);
+  }, [location, cancelLocationWatch]);
 
   return (
     <div className={styles.container}>
       <Search type={type} id={id} setHits={setHits} />
       <Occurrences
         hits={hits}
-        latitude={latitude}
-        longitude={longitude}
-        totalHits={totalClasses}
+        latitude={currentLocation?.latitude}
+        longitude={currentLocation?.longitude}
       />
     </div>
   );
@@ -84,14 +57,11 @@ export const getServerSideProps: GetServerSideProps = async context => {
 
   const initialHits = await initAlgolia(type, id);
 
-  const totalClasses = await getTotalClasses(type, id);
-
   return {
     props: {
       type,
       id,
       initialHits,
-      totalClasses
-    }
+    },
   };
 };

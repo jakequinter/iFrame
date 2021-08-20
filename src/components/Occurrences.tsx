@@ -8,16 +8,14 @@ import styles from 'src/styles/Occurrences.module.scss';
 
 type Occurrences = {
   hits: Array<Hit>;
-  latitude: number;
-  longitude: number;
-  totalHits: number;
+  latitude: number | undefined;
+  longitude: number | undefined;
 };
 
 export default function Occurrences({
   hits,
   latitude,
   longitude,
-  totalHits,
 }: Occurrences) {
   return (
     <>
@@ -37,9 +35,9 @@ export default function Occurrences({
               isInstructorCertifying={hit.curriculum.isInstructorCertifying}
               isWheelchairAccessible={hit.course.isWheelchairAccessible}
               lat={hit._geoloc.lat}
-              latitude={latitude}
+              latitude={latitude ? latitude : 0}
               lng={hit._geoloc.lng}
-              longitude={longitude}
+              longitude={longitude ? longitude : 0}
               price={hit.course.price}
               startTime={hit.dates.Day1_StartTime}
               state={hit.course.location.state}
@@ -48,16 +46,11 @@ export default function Occurrences({
           ))
         ) : (
           <p className={styles.noResults}>
-            There are currently no classes being offered near this location.
+            There are currently no classes being offered within 100 miles of
+            this location.
           </p>
         )}
       </div>
-      <Link href="#">
-        <a className={styles.link}>
-          See all {totalHits} classes{' '}
-          <FaChevronRight className={styles.icon} size={16} />
-        </a>
-      </Link>
     </>
   );
 }
