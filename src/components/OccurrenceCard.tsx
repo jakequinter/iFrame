@@ -81,7 +81,9 @@ export default function Occurrence({
               }/instructor/${instructorGuid}`}
               passHref
             >
-              <a>{instructorName}</a>
+              <a target="_blank" rel="noreferrer">
+                {instructorName}
+              </a>
             </Link>
             {!!averageReviewRating && (
               <span className={styles.rating}>
