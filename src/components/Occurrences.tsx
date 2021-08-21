@@ -1,5 +1,3 @@
-import Link from 'next/link';
-
 import { getDistanceFromLatLng } from 'src/utils/getLatLngDistance';
 import OccurrenceCard from './OccurrenceCard';
 
@@ -41,6 +39,8 @@ export default function Occurrences({
                 averageReviewRating={hit.instructor.averageReviewRating}
                 city={hit.course.location.city}
                 courseName={hit.course.name}
+                courseId={hit.course.guid}
+                distance={hit.distance}
                 grantsCCW={hit.course.grantsCCW}
                 hasLiveFire={hit.course.hasLiveFire}
                 imageUrl={hit.course.imageUrl}
@@ -52,7 +52,6 @@ export default function Occurrences({
                 startTime={hit.dates.Day1_StartTime}
                 state={hit.course.location.state}
                 venue={hit.course.location.name}
-                distance={hit.distance}
               />
             ))
         ) : (

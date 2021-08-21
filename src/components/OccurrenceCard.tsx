@@ -6,12 +6,17 @@ import { format } from 'date-fns';
 
 import { DEFAULT_COURSE_IMAGE } from 'src/images/images';
 import { liveFire, wheelchair, shield, permit } from './icons/icons';
+import {
+  createCourseLinkDef,
+  createCourseLink,
+} from 'src/utils/createCourseLink';
 import styles from 'src/styles/Occurrence.module.scss';
 
 type Occurrence = {
   averageReviewRating: number;
   city: string;
   courseName: string;
+  courseId: string;
   distance: number;
   grantsCCW: boolean;
   hasLiveFire: boolean;
@@ -29,6 +34,7 @@ type Occurrence = {
 export default function Occurrence({
   averageReviewRating,
   city,
+  courseId,
   courseName,
   distance,
   grantsCCW,
@@ -44,7 +50,12 @@ export default function Occurrence({
   venue,
 }: Occurrence) {
   return (
-    <div className={styles.card}>
+    <a
+      href={createCourseLink({ id: courseId, name: courseName })}
+      className={styles.card}
+      target="_blank"
+      rel="noreferrer"
+    >
       <div className={styles.topContent}>
         {typeof distance === 'number' && !Number.isNaN(distance) && (
           <div className={styles.distanceTag}>{distance} mi.</div>
@@ -101,6 +112,6 @@ export default function Occurrence({
 
         <p className={styles.price}>{price ? `$${price}` : 'Free'}</p>
       </div>
-    </div>
+    </a>
   );
 }
