@@ -8,14 +8,11 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  margin-right: 0.5rem;
+  margin-right: 1rem;
   min-width: 0;
-  position: relative;
-
-  // &.fixedwidth {
   min-width: 278px;
+  position: relative;
   width: 278px;
-  // }
 
   &:hover {
     color: $soot;

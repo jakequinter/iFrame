@@ -6,11 +6,9 @@ import { format } from 'date-fns';
 
 import { DEFAULT_COURSE_IMAGE } from 'src/images/images';
 import { liveFire, wheelchair, shield, permit } from './icons/icons';
-import {
-  createCourseLinkDef,
-  createCourseLink,
-} from 'src/utils/createCourseLink';
-import styles from 'src/styles/Occurrence.module.scss';
+import { createCourseLink } from 'src/utils/createCourseLink';
+
+import styles from 'src/styles/OccurrenceCard.module.scss';
 
 type Occurrence = {
   averageReviewRating: number;
