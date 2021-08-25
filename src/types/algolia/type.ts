@@ -1,5 +1,5 @@
 export enum TYPE {
   curriculum = 'curriculum',
-  range = 'range',
+  organization = 'organization',
   instructor = 'instructor'
 }

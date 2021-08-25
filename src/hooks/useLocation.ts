@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from 'next/router';
 
 import { GeolocationPositionCoords } from 'src/types/geolocation/geolocation'
+import { ORLANDO_FL, HOUSTON_TX, WEST_BEND_WI } from 'src/constants/coordinates'
 
 export const useLocation = (options = {}) => {
   const router = useRouter();
@@ -22,11 +23,11 @@ export const useLocation = (options = {}) => {
   // Error handler for geolocation's `getCurrentPosition` method
   const handleError = () => {
     if (router.query.id === 'FL-CCHDF') {
-      setLocation({latitude: 28.538336, longitude: -81.379234});
+      setLocation(ORLANDO_FL);
     } else if (router.query.id === 'TX-CCHDF') {
-      setLocation({latitude: 29.760427, longitude: -95.369804});
+      setLocation(HOUSTON_TX);
     } else {
-      setLocation({latitude: 43.426029, longitude: -88.184502});
+      setLocation(WEST_BEND_WI);
     }
       
   };

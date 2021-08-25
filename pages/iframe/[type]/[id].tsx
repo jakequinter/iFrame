@@ -59,7 +59,11 @@ export const getServerSideProps: GetServerSideProps = async context => {
   const id = context.params?.id as string;
   const type = context.params?.type as string;
 
-  if (type !== 'curriculum' && type !== 'range' && type !== 'instructor') {
+  if (
+    type !== TYPE.curriculum &&
+    type !== TYPE.organization &&
+    type !== TYPE.instructor
+  ) {
     return { props: {} };
   }
 
