@@ -15,7 +15,7 @@ import { TYPE } from 'src/types/algolia/type';
 import styles from 'src/styles/iFrame.module.scss';
 
 type IFrame = {
-  type: 'instructor' | 'curriculum';
+  type: TYPE;
   id: string;
   initialHits: Array<Hit>;
   totalClasses: number;
@@ -59,17 +59,17 @@ export const getServerSideProps: GetServerSideProps = async context => {
   const id = context.params?.id as string;
   const type = context.params?.type as string;
 
-  if (type === 'curriculum' || type === 'range' || type === 'instructor') {
-    const initialHits = await initAlgolia(type as TYPE, id);
-
-    return {
-      props: {
-        type,
-        id,
-        initialHits,
-      },
-    };
+  if (type !== 'curriculum' && type !== 'range' && type !== 'instructor') {
+    return { props: {} };
   }
 
-  return { props: {} };
+  const initialHits = await initAlgolia(type as TYPE, id);
+
+  return {
+    props: {
+      type,
+      id,
+      initialHits,
+    },
+  };
 };
