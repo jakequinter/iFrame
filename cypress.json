@@ -1,3 +1,6 @@
 {
-  "baseUrl": "http://localhost:3000"
+  "baseUrl": "http://localhost:3000",
+  "env": {
+    "NEXT_PUBLIC_TRAINING_URL": "https://training.usccadev.com"
+  }
 }
