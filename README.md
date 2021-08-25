@@ -8,7 +8,7 @@ Below is a production image of the iFrame being embedded on an Unbounce page.
 
 ### Overview
 
-- `pages/iframe/[type]/[id]`: This is a dynamic route filtering on an Algoli indices. `[type]` corresponds to `curriculum`, `organization`, or `instructor`, and `[id]` is the respective Algolia filter.
+- `pages/iframe/[type]/[id]`: This is a dynamic route filtering on an Algolia indices. `[type]` corresponds to `curriculum`, `organization`, or `instructor`, and `[id]` is the respective Algolia filter.
 
 ### Running Locally
 
