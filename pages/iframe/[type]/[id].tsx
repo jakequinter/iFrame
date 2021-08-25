@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { GetServerSideProps } from 'next';
+import DefaultErrorPage from 'next/error';
 
-import { Hit } from 'src/types/algolia/hits';
 import { initAlgolia } from 'src/utils/initAlgolia';
 import Occurrences from 'src/components/Occurrences';
 import Search from 'src/components/Search';
@@ -9,16 +9,19 @@ import { useLocation } from 'src/hooks/useLocation';
 import { useWatchLocation } from 'src/hooks/useWatchLocation';
 import { geolocationOptions } from 'src/constants/geolocationOptions';
 
+import { Hit } from 'src/types/algolia/hits';
+import { TYPE } from 'src/types/algolia/type';
+
 import styles from 'src/styles/iFrame.module.scss';
 
 type IFrame = {
-  type: 'instructor' | 'curriculum';
+  type: TYPE;
   id: string;
   initialHits: Array<Hit>;
   totalClasses: number;
 };
 
-export default function IFrame({ type, id, initialHits }: IFrame) {
+export default function Range({ type, id, initialHits }: IFrame) {
   const [hits, setHits] = useState(initialHits);
   const { location: currentLocation, error: currentError } =
     useLocation(geolocationOptions);
@@ -36,6 +39,10 @@ export default function IFrame({ type, id, initialHits }: IFrame) {
     }, 3000);
   }, [location, cancelLocationWatch]);
 
+  if (!initialHits) {
+    return <DefaultErrorPage statusCode={404} />;
+  }
+
   return (
     <div className={styles.container}>
       <Search type={type} id={id} setHits={setHits} />
@@ -50,12 +57,17 @@ export default function IFrame({ type, id, initialHits }: IFrame) {
 
 export const getServerSideProps: GetServerSideProps = async context => {
   const id = context.params?.id as string;
-  let type: 'instructor' | 'curriculum';
+  const type = context.params?.type as string;
 
-  if (id.includes('CCHDF') || id.includes('DSF1-CI')) type = 'curriculum';
-  else type = 'instructor';
+  if (
+    type !== TYPE.curriculum &&
+    type !== TYPE.organization &&
+    type !== TYPE.instructor
+  ) {
+    return { props: {} };
+  }
 
-  const initialHits = await initAlgolia(type, id);
+  const initialHits = await initAlgolia(type as TYPE, id);
 
   return {
     props: {

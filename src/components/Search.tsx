@@ -2,12 +2,13 @@ import React from 'react';
 import AlgoliaPlaces from 'algolia-places-react';
 
 import { Hit } from 'src/types/algolia/hits';
+import { TYPE } from 'src/types/algolia/type';
 import { initAlgolia } from 'src/utils/initAlgolia';
 
 import styles from 'src/styles/Search.module.scss';
 
 type Search = {
-  type: 'instructor' | 'curriculum';
+  type: TYPE;
   id: string;
   setHits: (hits: Array<Hit>) => void;
 };
