@@ -4,7 +4,7 @@ An embeddable iFrame developed for curriculum, organizations, and instructors to
 
 Below is a production image of the iFrame being embedded on an Unbounce page.
 
-<img src="public/images/README_displayimage.png" />
+<img src="public/images/README_displayimage.png" height="500" />
 
 ### Overview
 
